@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to Christmas</title>
+    <style>
+        @font-face {
+            font-family: 'digital-clock-font';
+            src: url('fonts/ds_digital/DS-DIGI.TTF');
+            font-display: swap;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('images/IMG_0534.png') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .countdown {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'digital-clock-font', monospace;
+            overflow: visible;
+            color: #006600;
+            text-shadow: 
+                -2px -2px 0 #000000,
+                2px -2px 0 #000000,
+                -2px 2px 0 #000000,
+                2px 2px 0 #000000,
+                -1px -1px 0 #000000,
+                1px -1px 0 #000000,
+                -1px 1px 0 #000000,
+                1px 1px 0 #000000;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-weight: bold;
+        }
+
+        /* Style for each countdown box */
+        .time-unit {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .time-value {
+            font-size: clamp(1.5rem, 8vw, 12rem);
+            line-height: 1;
+            text-align: center;
+        }
+
+        #days {
+            top: 11%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(300px, 30vw);
+        }
+
+        #days .time-value {
+            font-size: clamp(2.5rem, 35vw, 22rem);
+        }
+
+        #hours {
+            top: 60%;
+            left: 12%;
+            width: min(200px, 20vw);
+        }
+
+        #hours .time-value {
+            font-size: clamp(2rem, 18vw, 13rem);
+        }
+
+        #minutes {
+            top: 60%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(200px, 20vw);
+        }
+
+        #minutes .time-value {
+            font-size: clamp(2rem, 18vw, 13rem);
+        }
+
+        #seconds {
+            top: 60%;
+            right: 12%;
+            width: min(200px, 20vw);
+        }
+
+        #seconds .time-value {
+            font-size: clamp(2rem, 18vw, 13rem);
+        }
+
+        .christmas-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            display: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            #hours {
+                left: 8%;
+            }
+            
+            #seconds {
+                right: 8%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown" role="main" aria-label="Christmas countdown timer">
+        <div class="box">
+            <div id="days" class="time-unit" aria-label="Days remaining">
+                <div class="time-value" aria-live="polite"></div>
+            </div>
+            <div id="hours" class="time-unit" aria-label="Hours remaining">
+                <div class="time-value" aria-live="polite"></div>
+            </div>
+            <div id="minutes" class="time-unit" aria-label="Minutes remaining">
+                <div class="time-value" aria-live="polite"></div>
+            </div>
+            <div id="seconds" class="time-unit" aria-label="Seconds remaining">
+                <div class="time-value" aria-live="polite"></div>
+            </div>
+            <div id="christmas-message" class="christmas-message" aria-live="polite">Merry Christmas!</div>
+        </div>
+    </div>
+
+    <script>
+        function padWithZero(number) {
+            return number.toString().padStart(2, '0');
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const nextChristmas = new Date(currentYear, 11, 25, 0, 0, 0, 0);
+
+            // Check if it's Christmas Day
+            if (now.getMonth() === 11 && now.getDate() === 25) {
+                document.getElementById('days').style.display = 'none';
+                document.getElementById('hours').style.display = 'none';
+                document.getElementById('minutes').style.display = 'none';
+                document.getElementById('seconds').style.display = 'none';
+                document.getElementById('christmas-message').style.display = 'block';
+                return;
+            }
+
+            // If Christmas has passed this year, set to next year
+            if (now > nextChristmas) {
+                nextChristmas.setFullYear(currentYear + 1);
+            }
+
+            const timeRemaining = nextChristmas - now;
+
+            // Calculate time components
+            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            // Update display
+            document.getElementById('days').querySelector('.time-value').textContent = days;
+            document.getElementById('hours').querySelector('.time-value').textContent = padWithZero(hours);
+            document.getElementById('minutes').querySelector('.time-value').textContent = padWithZero(minutes);
+            document.getElementById('seconds').querySelector('.time-value').textContent = padWithZero(seconds);
+            
+            // Ensure all elements are visible
+            document.getElementById('days').style.display = 'flex';
+            document.getElementById('hours').style.display = 'flex';
+            document.getElementById('minutes').style.display = 'flex';
+            document.getElementById('seconds').style.display = 'flex';
+            document.getElementById('christmas-message').style.display = 'none';
+        }
+
+        // Use requestAnimationFrame for smoother updates, falling back to setInterval
+        let lastUpdate = 0;
+        function animateCountdown(timestamp) {
+            if (timestamp - lastUpdate >= 1000) {
+                updateCountdown();
+                lastUpdate = timestamp;
+            }
+            requestAnimationFrame(animateCountdown);
+        }
+
+        // Initialize
+        updateCountdown();
+        requestAnimationFrame(animateCountdown);
+    </script>
+</body>
+</html>
