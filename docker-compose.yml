@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  christmas-countdown:
+    build: .
+    ports:
+      - "8080:80"
+    container_name: christmas-countdown
+    restart: unless-stopped
+

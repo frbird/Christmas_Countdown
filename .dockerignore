@@ -1,0 +1,9 @@
+README.md
+countdown.py
+.git
+.gitignore
+Dockerfile
+docker-compose.yml
+.dockerignore
+nginx.conf
+

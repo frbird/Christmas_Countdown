@@ -14,6 +14,7 @@ A festive web-based countdown timer that displays the time remaining until Chris
 
 ## How to Use
 
+### Option 1: Direct Browser Access
 1. Open `countdown_website.html` in a web browser
 2. The countdown will automatically start displaying:
    - **Days** remaining (large display at top)
@@ -22,12 +23,71 @@ A festive web-based countdown timer that displays the time remaining until Chris
    - **Seconds** remaining (bottom right)
 3. On Christmas Day, the display will show "Merry Christmas!" message
 
+### Option 2: Docker Container
+
+#### Using Docker Compose (Recommended)
+```bash
+docker-compose up -d
+```
+The webpage will be available at `http://localhost:8080`
+
+#### Using Docker directly
+```bash
+# Build the image
+docker build -t christmas-countdown .
+
+# Run the container
+docker run -d -p 8080:80 --name christmas-countdown christmas-countdown
+```
+
+#### Stop the container
+```bash
+# With docker-compose
+docker-compose down
+
+# With docker directly
+docker stop christmas-countdown
+docker rm christmas-countdown
+```
+
+#### Using the published image from GitHub Container Registry
+```bash
+# Pull and run the image from GitHub Container Registry
+docker run -d -p 8080:80 --name christmas-countdown ghcr.io/[username]/christmas-countdown:latest
+```
+
+Replace `[username]` with your GitHub username or organization name. The image is automatically published to GitHub Container Registry on pushes to the main branch.
+
+## CI/CD
+
+### GitHub Actions
+
+The repository includes a GitHub Actions workflow that automatically builds and publishes the Docker container to GitHub Container Registry on:
+- Push to `main` or `master` branch (builds and publishes)
+- Pull requests to `main` or `master` branch (builds only, does not publish)
+- Manual trigger via `workflow_dispatch`
+
+The workflow file is located at `.github/workflows/build.yml` and:
+- Uses Docker Buildx with caching for faster builds
+- Publishes images to `ghcr.io/[username]/christmas-countdown`
+- Tags images with `latest` for the default branch
+- Includes branch and PR tags for other branches
+
+**Note**: The first time the workflow runs, you may need to make the package public in your GitHub repository settings under "Packages" if you want it publicly accessible.
+
 ## File Structure
 
 ```
 Christmas_Countdown/
 ├── countdown_website.html    # Main HTML file with countdown functionality
 ├── countdown.py               # Python countdown script (separate utility)
+├── Dockerfile                 # Docker container configuration
+├── docker-compose.yml         # Docker Compose configuration
+├── nginx.conf                 # Nginx server configuration
+├── .dockerignore              # Files to exclude from Docker build
+├── .github/
+│   └── workflows/
+│       └── build.yml          # GitHub Actions workflow for building container
 ├── fonts/
 │   ├── digital-7/            # Digital clock font family
 │   └── ds_digital/           # DS Digital font (used in the countdown)
@@ -90,5 +150,6 @@ Adjust the `font-size` values using `clamp()` for responsive sizing:
 ## License
 
 This project is provided as-is for personal use.
+
 
 
