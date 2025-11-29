@@ -26,10 +26,16 @@ A festive web-based countdown timer that displays the time remaining until Chris
 ### Option 2: Docker Container
 
 #### Using Docker Compose (Recommended)
+The docker-compose file uses the published image from GitHub Container Registry. Edit `docker-compose.yml` and replace `YOUR_USERNAME` and `YOUR_REPO_NAME` with your actual GitHub username and repository name:
+
 ```bash
+# Edit docker-compose.yml to set the correct image path
+# Then run:
 docker-compose up -d
 ```
 The webpage will be available at `http://localhost:8080`
+
+**Note**: The image name format is `ghcr.io/username/repository-name:latest` and matches what's published by the GitHub Actions workflow.
 
 #### Using Docker directly
 ```bash

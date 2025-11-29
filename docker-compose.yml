@@ -2,9 +2,10 @@ version: '3.8'
 
 services:
   christmas-countdown:
-    build: .
+    # Replace YOUR_USERNAME and YOUR_REPO_NAME with your GitHub username and repository name
+    # Example: ghcr.io/username/Christmas_Countdown:latest
+    image: ghcr.io/frbird/Christmas_Countdown:latest
     ports:
       - "8080:80"
     container_name: christmas-countdown
     restart: unless-stopped
-
