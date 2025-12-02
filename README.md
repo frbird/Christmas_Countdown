@@ -1,15 +1,12 @@
 # Christmas Countdown Clock
 
-A festive web-based countdown timer that displays the time remaining until Christmas Day. Features a beautiful green background with Christmas lights and snowflakes, with countdown digits displayed in red boxes.
+A festive web-based countdown timer that displays the time remaining until Christmas Day.
 
 ## Features
 
 - **Real-time countdown** to Christmas Day (December 25th)
-- **Beautiful festive design** with Christmas-themed background image
 - **Digital clock font** for authentic countdown display
 - **Responsive design** that works on various screen sizes
-- **Smooth updates** using `requestAnimationFrame` for optimal performance
-- **Accessibility features** with ARIA labels and live regions
 - **Automatic year handling** - automatically counts down to next Christmas if current date has passed
 
 ## How to Use
