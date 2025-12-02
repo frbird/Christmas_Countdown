@@ -64,6 +64,10 @@ docker run -d -p 8080:80 --name christmas-countdown ghcr.io/[username]/christmas
 
 Replace `[username]` with your GitHub username or organization name. The image is automatically published to GitHub Container Registry on pushes to the main branch.
 
+### Option 3: Raspberry Pi Setup
+
+For instructions on setting up the countdown clock on a Raspberry Pi (especially Pi Zero 2 W), see [configure_pi.md](configure_pi.md).
+
 ## CI/CD
 
 ### GitHub Actions
@@ -87,6 +91,7 @@ The workflow file is located at `.github/workflows/build.yml` and:
 Christmas_Countdown/
 ├── countdown_website.html    # Main HTML file with countdown functionality
 ├── countdown.py               # Python countdown script (separate utility)
+├── configure_pi.md            # Raspberry Pi setup instructions
 ├── Dockerfile                 # Docker container configuration
 ├── docker-compose.yml         # Docker Compose configuration
 ├── nginx.conf                 # Nginx server configuration
