@@ -117,14 +117,14 @@
 
         .christmas-message {
             position: absolute;
-            top: 50%;
+            top: 25%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: clamp(2rem, 5vw, 4rem);
+            font-size: clamp(2rem, 7vw, 6rem);
             font-family: Arial, sans-serif;
-            color: white;
+            color: 006600;
             text-align: center;
-            display: none;
+            display: flex;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
@@ -154,7 +154,7 @@
             <div id="seconds" class="time-unit" aria-label="Seconds remaining">
                 <div class="time-value" aria-live="polite"></div>
             </div>
-            <div id="christmas-message" class="christmas-message" aria-live="polite">Merry Christmas!</div>
+            <div id="christmas-message" class="christmas-message" aria-live="polite">Merry Christmas!!!</div>
         </div>
     </div>
 
@@ -174,7 +174,7 @@
                 document.getElementById('hours').style.display = 'none';
                 document.getElementById('minutes').style.display = 'none';
                 document.getElementById('seconds').style.display = 'none';
-                document.getElementById('christmas-message').style.display = 'block';
+                document.getElementById('christmas-message').style.display = 'flex';
                 return;
             }
 
